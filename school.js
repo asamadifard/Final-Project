@@ -2,7 +2,7 @@
 mongodb+srv://asamadifard:<db_password>@schooldb.tefffqw.mongodb.net/
 */
 
-const School = require("./DBformat/courseDB")
+const School = require("./Backend/DBformat/courseDB")
 const express = require('express');
 const router = express.Router();
 var cors = require('cors');
