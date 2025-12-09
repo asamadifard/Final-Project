@@ -1,7 +1,21 @@
 {
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "school.js",
+  "scripts": {
+    "start": "node school.js",
+    "dev": "nodemon school.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+{
   "dependencies": {
     "express": "^5.2.1",
     "mongo": "^0.1.0",
-    "mongoose": "^9.0.1"
+    "mongoose": "^9.0.1",
+    "nodemon": "^3.1.11"
   }
 }
