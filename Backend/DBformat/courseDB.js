@@ -1,18 +1,18 @@
 const { type } = require("os")
-const db = require("../db")
+const db = require("../studentDB")
 
 
-const course=db.model("Course",{
+const School=db.model("School",{
     courseName: {type: String, required: true},
     instrMethod: String,
     slots: {type: Number, min:1, max:20},
-    hourStart:{type:date},
-    hourEnd:{type:date},
-    dayOfWeek:[String],
-    calStartDate:{type:date},
-    calEndDate:{type:date},
+    hourStart:{type:Date},
+    hourEnd:{type:Date},
+    dayOfWeek: [String],
+    calStartDate:{type:Date},
+    calEndDate:{type:Date},
     instructor:{type:String}
 
 })
 
-module.exports=course
+module.exports=School
