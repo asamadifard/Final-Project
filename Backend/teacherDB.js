@@ -1,3 +1,0 @@
-/*
-Database to manage teacher records
-*/

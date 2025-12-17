@@ -1,13 +1,14 @@
 /*
 mongodb+srv://asamadifard:<db_password>@schooldb.tefffqw.mongodb.net/
 */
-
-const School = require("./Backend/DBformat/courseDB")
 const express = require('express');
-const router = express.Router();
+const School = require("./backend/courseDB")
 var cors = require('cors');
 
+
+
 const school = express();
+school.use(cors())
 
 school.use(express.json());
 
@@ -26,6 +27,111 @@ router.get("/schoolDB", async(req,res) =>{
         console.log(err);
     }
 })
+
+//if i want to grab a single song i can use the query parameters to do so....
+//i am going to use what we call a router parameter to say that 'hey backend, this part of the url can change and will be grabbed from the front end'
+router.get("/songs/:id", async(req,res) =>{
+    try{
+        const song = await Song.findById(req.params.id)
+        res.json(song)
+    }
+    catch(err){
+        res.status(400).send(err)
+
+    }
+})
+
+router.post("/auth", async(req,res){
+    if(!req.body.username || !req.body.password){
+        res.status(400).json({error: "Missing username or password"})
+        return
+})
+    await user.findOne({username: req.body.username}, function(err,user){
+        if(err){
+            res.status(400).send(err)
+        
+        else if(!user){
+            res.status(401).json({error: "Invalid username or password"})
+        }}else{
+            if(user.password != req.body.password){
+                res.status(401).json({error: "bad password"})
+        }else{
+            username2 = user.username
+            const token = jwt.encode({username: user.username},secret)
+            const auth = 1
+
+            //respond with the token
+            res.json({
+                username2,
+                token: token,
+                auth: auth
+            })
+        }
+    })
+}
+
+router.get("/status", async(req,res)=>{
+    if(!req.headers["x-auth"]){
+        return res.status(401.json({error: "missing x-auth"}))
+
+    }
+})
+
+const token = req.headers["x-auth"]
+try{
+    const decoded = jwt.decode(token,secret)
+
+    let Users = User.find({},"username status")
+    res.json(Users)
+}catch(ex){
+    res.status(401).json({error: "invalid jwt"})
+}
+
+router.post("/auth", async(req,res){
+    if(!req.body.username || !req.body.password){
+        res.status(400).json({error: "Missing username or password"})
+        return
+})
+    await user.findOne({username: req.body.username}, function(err,user){
+        if(err){
+            res.status(400).send(err)
+        
+        else if(!user){
+            res.status(401).json({error: "Invalid username or password"})
+        }}else{
+            if(user.password != req.body.password){
+                res.status(401).json({error: "bad password"})
+        }else{
+            username2 = user.username
+            const token = jwt.encode({username: user.username},secret)
+            const auth = 1
+
+            //respond with the token
+            res.json({
+                username2,
+                token: token,
+                auth: auth
+            })
+        }
+    })
+}
+
+router.get("/status", async(req,res)=>{
+    if(!req.headers["x-auth"]){
+        return res.status(401.json({error: "missing x-auth"}))
+
+    }
+})
+
+const token = req.headers["x-auth"]
+try{
+    const decoded = jwt.decode(token,secret)
+
+    let Users = User.find({},"username status")
+    res.json(Users)
+}catch(ex){
+    res.status(401).json({error: "invalid jwt"})
+}
 
 //grabs backend from the front end
 router.get("schoolDB/:id", async(req,res)=>{
@@ -78,7 +184,27 @@ router.post("/schoolDB", async(req,res)=>{
     }
 })
 
-school.use("/api",router);
+router.delete(delete("/school/:id",async(req,res)=>{
+    try{
+    School.deleteOne({_id: req.params.id})
+    }
+    catch{
+        res.status(400).send(err);
+    }
+})
+
+router.post("/songs", async(req,res)=>{
+    try{
+        const school = await new School(req.body)
+        await school.save
+        res.status(201).json(school)
+        console.log(school)
+    }catch{
+        res.status(400).send(err)
+    }
+})
+
+school.use("/api",router)
 const PORT = process.env.PORT || 3000;
 
 school.listen(PORT,()=>{
