@@ -87,7 +87,7 @@ try{
     res.status(401).json({error: "invalid jwt"})
 }
 
-router.post("/auth", async(req,res){
+router.post("/auth", async(req,res)=>{
     if(!req.body.username || !req.body.password){
         res.status(400).json({error: "Missing username or password"})
         return
